@@ -45,7 +45,7 @@ class WithRxViewController: UIViewController {
     private var resetButton: UIButton = {
         let newButton = UIButton()
         newButton.setTitle("Reset", for: .normal)
-        newButton.setTitleColor(.systemBlue, for: .normal)
+        newButton.setTitleColor(.systemRed, for: .normal)
         newButton.translatesAutoresizingMaskIntoConstraints = false
         return newButton
     }()

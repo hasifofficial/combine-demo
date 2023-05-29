@@ -21,7 +21,7 @@ class WithoutCombineViewController: UIViewController {
     private var incrementButton: UIButton = {
         let newButton = UIButton()
         newButton.setTitle("Increment", for: .normal)
-        newButton.setTitleColor(.systemRed, for: .normal)
+        newButton.setTitleColor(.systemBlue, for: .normal)
         newButton.translatesAutoresizingMaskIntoConstraints = false
         return newButton
     }()
@@ -43,7 +43,7 @@ class WithoutCombineViewController: UIViewController {
     private var resetButton: UIButton = {
         let newButton = UIButton()
         newButton.setTitle("Reset", for: .normal)
-        newButton.setTitleColor(.systemBlue, for: .normal)
+        newButton.setTitleColor(.systemRed, for: .normal)
         newButton.translatesAutoresizingMaskIntoConstraints = false
         return newButton
     }()
