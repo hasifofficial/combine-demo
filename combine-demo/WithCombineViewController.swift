@@ -44,7 +44,7 @@ class WithCombineViewController: UIViewController {
     private var resetButton: UIButton = {
         let newButton = UIButton()
         newButton.setTitle("Reset", for: .normal)
-        newButton.setTitleColor(.systemBlue, for: .normal)
+        newButton.setTitleColor(.systemRed, for: .normal)
         newButton.translatesAutoresizingMaskIntoConstraints = false
         return newButton
     }()
@@ -120,5 +120,26 @@ class WithCombineViewController: UIViewController {
     
     @objc private func resetButtonAction() {
         counter.send(0)
+    }
+}
+
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
+
+struct WithCombineViewControllerRepresentable: UIViewControllerRepresentable {
+    
+    func makeUIViewController(context: Context) -> some UIViewController {
+        return WithCombineViewController()
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        
+    }
+}
+#endif
+
+struct WithCombineViewController_Previews: PreviewProvider {
+    static var previews: some View {
+        WithCombineViewControllerRepresentable()
     }
 }
