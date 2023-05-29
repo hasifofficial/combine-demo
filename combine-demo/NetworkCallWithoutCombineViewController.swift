@@ -19,7 +19,7 @@ class NetworkCallWithoutCombineViewController: UIViewController {
         
     private var nextButton: UIButton = {
         let newButton = UIButton()
-        newButton.setTitle("To With Rx", for: .normal)
+        newButton.setTitle("To With Combine", for: .normal)
         newButton.setTitleColor(.systemBlue, for: .normal)
         newButton.translatesAutoresizingMaskIntoConstraints = false
         return newButton
