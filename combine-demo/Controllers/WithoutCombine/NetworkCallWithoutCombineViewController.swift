@@ -94,6 +94,27 @@ class NetworkCallWithoutCombineViewController: UIViewController {
         }
     }
     
+    private func loadUserDetails(id: Int) {
+        service.getUserDetail(id: id) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let user):
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self,
+                          let data = try? JSONEncoder().encode(user),
+                          let jsonString = String(data: data, encoding: .utf8) else { return }
+                    
+                    let alert = UIAlertController(title: user.name, message: jsonString, preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
     @objc private func nextButtonAction() {
         let userServiceCombine = UserServiceCombine()
         let vm = NetworkCallWithCombineViewModel(service: userServiceCombine)
@@ -107,13 +128,19 @@ class NetworkCallWithoutCombineViewController: UIViewController {
 extension NetworkCallWithoutCombineViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? MyCustomTableViewCell else { return UITableViewCell() }
+        
         cell.title.text = users[indexPath.row].name
         cell.subtitle.text = users[indexPath.row].username
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        loadUserDetails(id: users[indexPath.row].id)
     }
 }
 
