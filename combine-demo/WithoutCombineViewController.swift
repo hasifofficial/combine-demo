@@ -98,7 +98,8 @@ class WithoutCombineViewController: UIViewController {
     }
     
     @objc private func nextButtonAction() {
-        let vc = WithRxViewController()
+        let vm = WithRxViewModel()
+        let vc = WithRxViewController(viewModel: vm)
         navigationController?.pushViewController(vc, animated: true)
     }
     
