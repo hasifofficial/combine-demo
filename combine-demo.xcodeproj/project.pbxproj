@@ -129,18 +129,10 @@
 		1BE674EC2A22EA82009554EC /* combine-demo */ = {
 			isa = PBXGroup;
 			children = (
+				1BE6755F2A259F52009554EC /* Resources */,
+				1BE675592A259E7B009554EC /* Controllers */,
 				1BE675502A245600009554EC /* Models */,
 				1BE675402A24536A009554EC /* Network */,
-				1BE674ED2A22EA82009554EC /* AppDelegate.swift */,
-				1BE674EF2A22EA82009554EC /* SceneDelegate.swift */,
-				1BE6751D2A22EB00009554EC /* RootViewController.swift */,
-				1BE675212A22EDC0009554EC /* WithCombineViewController.swift */,
-				1BE6753C2A24439B009554EC /* NetworkCallWithoutCombineViewController.swift */,
-				1BE675532A24AB66009554EC /* NetworkCallWithCombineView.swift */,
-				1BE675262A230331009554EC /* WithRxViewController.swift */,
-				1BE675232A22EF6A009554EC /* WithoutCombineViewController.swift */,
-				1BE674F62A22EA83009554EC /* Assets.xcassets */,
-				1BE674F82A22EA83009554EC /* LaunchScreen.storyboard */,
 				1BE674FB2A22EA83009554EC /* Info.plist */,
 			);
 			path = "combine-demo";
@@ -206,6 +198,70 @@
 				1BE675572A25917B009554EC /* UserService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		1BE675592A259E7B009554EC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1BE6755E2A259F32009554EC /* WithRx */,
+				1BE6755D2A259F20009554EC /* WithoutCombine */,
+				1BE6755C2A259ECE009554EC /* WithCombine */,
+				1BE6755B2A259EBA009554EC /* Root */,
+				1BE6755A2A259E8C009554EC /* Base */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		1BE6755A2A259E8C009554EC /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				1BE674ED2A22EA82009554EC /* AppDelegate.swift */,
+				1BE674EF2A22EA82009554EC /* SceneDelegate.swift */,
+				1BE674F82A22EA83009554EC /* LaunchScreen.storyboard */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		1BE6755B2A259EBA009554EC /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				1BE6751D2A22EB00009554EC /* RootViewController.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		1BE6755C2A259ECE009554EC /* WithCombine */ = {
+			isa = PBXGroup;
+			children = (
+				1BE675212A22EDC0009554EC /* WithCombineViewController.swift */,
+				1BE675532A24AB66009554EC /* NetworkCallWithCombineView.swift */,
+			);
+			path = WithCombine;
+			sourceTree = "<group>";
+		};
+		1BE6755D2A259F20009554EC /* WithoutCombine */ = {
+			isa = PBXGroup;
+			children = (
+				1BE6753C2A24439B009554EC /* NetworkCallWithoutCombineViewController.swift */,
+				1BE675232A22EF6A009554EC /* WithoutCombineViewController.swift */,
+			);
+			path = WithoutCombine;
+			sourceTree = "<group>";
+		};
+		1BE6755E2A259F32009554EC /* WithRx */ = {
+			isa = PBXGroup;
+			children = (
+				1BE675262A230331009554EC /* WithRxViewController.swift */,
+			);
+			path = WithRx;
+			sourceTree = "<group>";
+		};
+		1BE6755F2A259F52009554EC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1BE674F62A22EA83009554EC /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

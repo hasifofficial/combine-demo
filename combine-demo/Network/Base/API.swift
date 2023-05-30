@@ -40,6 +40,7 @@ class API {
             case 200...299:
                 guard let data = data,
                       let decodedResponse = try? JSONDecoder().decode(type, from: data) else { return completion(.failure(RequestError.decode)) }
+                
                 return completion(.success(decodedResponse))
             case 401:
                 return completion(.failure(RequestError.unauthorized))
@@ -84,7 +85,6 @@ class API {
                     }
                 }
                 .decode(type: type, decoder: JSONDecoder())
-                .receive(on: RunLoop.main)
                 .sink(receiveCompletion: { [weak self] completion in
                     guard self != nil else { return promise(.failure(RequestError.unknown)) }
                     
@@ -92,7 +92,6 @@ class API {
                     case .finished:
                         break
                     case .failure(let error):
-                        print("Failure with \(error.localizedDescription) error")
                         promise(.failure(error))
                     }
                 }, receiveValue: { [weak self] value in

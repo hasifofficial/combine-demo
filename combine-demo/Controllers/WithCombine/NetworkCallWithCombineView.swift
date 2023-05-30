@@ -28,7 +28,7 @@ class NetworkCallWithCombineViewModel: ObservableObject {
                 case .finished:
                     break
                 case .failure(let error):
-                    print("error: \(error)")
+                    print("Error: \(error.localizedDescription)")
                 }
             } receiveValue: { [weak self] users in
                 guard let self = self else { return }
