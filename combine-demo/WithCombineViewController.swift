@@ -106,7 +106,8 @@ class WithCombineViewController: UIViewController {
     }
     
     @objc private func nextButtonAction() {
-        let vc = NetworkCallWithoutCombineViewController(service: UsersService())
+        let userService = UserService()
+        let vc = NetworkCallWithoutCombineViewController(service: userService)
         navigationController?.pushViewController(vc, animated: true)
     }
     

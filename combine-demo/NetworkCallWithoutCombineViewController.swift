@@ -26,9 +26,9 @@ class NetworkCallWithoutCombineViewController: UIViewController {
     }()
     
     private var users: [User] = []
-    private let service: UsersService
+    private let service: UserService
     
-    init(service: UsersService) {
+    init(service: UserService) {
         self.service = service
         super.init(nibName: nil, bundle: nil)
     }
@@ -77,35 +77,27 @@ class NetworkCallWithoutCombineViewController: UIViewController {
     }
     
     private func loadUsers() {
-        fetchData { [weak self] result in
+        service.getAllUsers {[weak self] result in
             guard let self = self else { return }
             
             switch result {
-            case .success(let response):
+            case .success(let users):
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     
-                    self.users = response
+                    self.users = users
                     self.tableView.reloadData()
                 }
             case .failure(let error):
-                print(error)
+                print("Error: \(error.localizedDescription)")
             }
         }
     }
     
-    private func fetchData(completion: @escaping (Result<[User], RequestError>) -> Void) {
-        Task(priority: .background) { [weak self] in
-            guard let self = self else { return }
-            
-            let result = await self.service.getAllUsers()
-            completion(result)
-        }
-    }
-
     @objc private func nextButtonAction() {
-        let viewModel = NetworkCallWithCombineViewModel(service: self.service)
-        let view = NetworkCallWithCombineView(viewModel: viewModel)
+        let userServiceCombine = UserServiceCombine()
+        let vm = NetworkCallWithCombineViewModel(service: userServiceCombine)
+        let view = NetworkCallWithCombineView(viewModel: vm)
         let vc = UIHostingController(rootView: view)
         vc.title = "API With Combine"
         navigationController?.pushViewController(vc, animated: true)

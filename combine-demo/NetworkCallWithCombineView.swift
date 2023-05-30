@@ -10,37 +10,32 @@ import Combine
 
 class NetworkCallWithCombineViewModel: ObservableObject {
     @Published var users: [User] = []
-    private let service: UsersService
     
-    init(service: UsersService) {
+    private let service: UserServiceCombine
+    private var cancellable = Set<AnyCancellable>()
+
+    init(service: UserServiceCombine) {
         self.service = service
     }
 
     func loadUsers() {
-        fetchData { [weak self] result in
-            guard let self = self else { return }
-
-            switch result {
-            case .success(let response):
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-
-                    self.users = response
+        service.getAllUsers()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                guard self != nil else { return }
+                
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    print("error: \(error)")
                 }
-            case .failure(let error):
-                print(error)
+            } receiveValue: { [weak self] users in
+                guard let self = self else { return }
+                self.users = users
             }
-        }
-    }
-    
-    private func fetchData(completion: @escaping (Result<[User], RequestError>) -> Void) {
-        Task(priority: .background) { [weak self] in
-            guard let self = self else { return }
-            
-            let result = await self.service.getAllUsers()
-            completion(result)
-        }
-    }
+            .store(in: &cancellable)
+    }    
 }
 
 struct NetworkCallWithCombineView: View {
@@ -68,6 +63,6 @@ struct NetworkCallWithCombineView: View {
 
 struct NetworkCallWithCombineView_Previews: PreviewProvider {
     static var previews: some View {
-        NetworkCallWithCombineView(viewModel: NetworkCallWithCombineViewModel(service: UsersService()))
+        NetworkCallWithCombineView(viewModel: NetworkCallWithCombineViewModel(service: UserServiceCombine()))
     }
 }
