@@ -1,5 +1,5 @@
 //
-//  WithRxViewController.swift
+//  WithCombineRefactoredViewController.swift
 //  combine-demo
 //
 //  Created by Mohammad Hasif Afiq on 28/05/2023.
@@ -7,55 +7,26 @@
 
 import Foundation
 import UIKit
+import Combine
 import SwiftUI
-import RxSwift
-import RxCocoa
 
-class WithRxViewModel {
-    struct Input {
-        let didTapIncrement: Signal<Void>
-        let didTapDecrement: Signal<Void>
-        let didTapReset: Signal<Void>
-        let didTapNext: Signal<Void>
+class WithCombineRefactoredViewModel {
+    @Published private(set) var counter: Int = 0
+    
+    func increment() {
+        counter += 1
     }
     
-    struct Output {
-        let didTapIncrementSignal: Signal<Void>
-        let didTapDecrementSignal: Signal<Void>
-        let didTapResetSignal: Signal<Void>
-        let didTapNextSignal: Signal<Void>
-        let counterSignal: Signal<Int>
+    func decrement() {
+        counter -= 1
     }
-    
-    private let counterRelay = BehaviorRelay<Int>(value: 0)
-    
-    func transform(input: Input) -> Output {
-        let didTapIncrementSignal = input.didTapIncrement.do(onNext: { [weak self] in
-            guard let self = self else { return }
-            self.counterRelay.accept(self.counterRelay.value + 1)
-        })
-        
-        let didTapDecrementSignal = input.didTapDecrement.do(onNext: { [weak self] in
-            guard let self = self else { return }
-            self.counterRelay.accept(self.counterRelay.value - 1)
-        })
-        
-        let didTapResetSignal = input.didTapReset.do(onNext: { [weak self] in
-            guard let self = self else { return }
-            self.counterRelay.accept(0)
-        })
 
-        return Output(
-            didTapIncrementSignal: didTapIncrementSignal,
-            didTapDecrementSignal: didTapDecrementSignal,
-            didTapResetSignal: didTapResetSignal,
-            didTapNextSignal: input.didTapNext.asSignal(),
-            counterSignal: counterRelay.asSignal(onErrorJustReturn: 0)
-        )
+    func reset() {
+        counter = 0
     }
 }
 
-class WithRxViewController: UIViewController {
+class WithCombineRefactoredViewController: UIViewController {
     private var containerStackView: UIStackView = {
         let newStackVIew = UIStackView()
         newStackVIew.axis = .vertical
@@ -97,16 +68,16 @@ class WithRxViewController: UIViewController {
     
     private var nextButton: UIButton = {
         let newButton = UIButton()
-        newButton.setTitle("To With Combine", for: .normal)
+        newButton.setTitle("To API Without Combine", for: .normal)
         newButton.setTitleColor(.systemBlue, for: .normal)
         newButton.translatesAutoresizingMaskIntoConstraints = false
         return newButton
     }()
     
-    let viewModel: WithRxViewModel
-    private var disposeBag = DisposeBag()
-    
-    init(viewModel: WithRxViewModel) {
+    let viewModel: WithCombineRefactoredViewModel
+    private var cancellables = Set<AnyCancellable>()
+
+    init(viewModel: WithCombineRefactoredViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -124,7 +95,7 @@ class WithRxViewController: UIViewController {
     
     private func setupNavBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
-        title = "With Rx"
+        title = "With Refactored Combine"
     }
 
     private func setupViews() {
@@ -146,51 +117,44 @@ class WithRxViewController: UIViewController {
     }
     
     private func setupListeners() {
-        let output = viewModel.transform(input: .init(
-            didTapIncrement: incrementButton.rx.tap.asSignal(),
-            didTapDecrement: decrementButton.rx.tap.asSignal(),
-            didTapReset: resetButton.rx.tap.asSignal(),
-            didTapNext: nextButton.rx.tap.asSignal()
-        ))
-        
-        output.didTapIncrementSignal
-            .emit()
-            .disposed(by: disposeBag)
-        
-        output.didTapDecrementSignal
-            .emit()
-            .disposed(by: disposeBag)
+        incrementButton.addTarget(self, action: #selector(incrementButtonAction), for: .touchUpInside)
+        decrementButton.addTarget(self, action: #selector(decrementButtonAction), for: .touchUpInside)
+        resetButton.addTarget(self, action: #selector(resetButtonAction), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(nextButtonAction), for: .touchUpInside)
 
-        output.didTapResetSignal
-            .emit()
-            .disposed(by: disposeBag)
-
-        output.didTapNextSignal
-            .emit(onNext: { [weak self] value in
-                guard let self = self else { return }
-                let vc = WithCombineViewController()
-                self.navigationController?.pushViewController(vc, animated: true)
-            })
-            .disposed(by: disposeBag)
-
-        output.counterSignal
+        viewModel.$counter
             .map { value -> String in
                 String(value)
             }
-            .emit(onNext: { [weak self] value in
-                guard let self = self else { return }
-                self.countLabel.text = value
-            })
-            .disposed(by: disposeBag)
+            .assign(to: \.text, on: countLabel)
+            .store(in: &cancellables)
+    }
+    
+    @objc private func nextButtonAction() {
+        let userService = UserService()
+        let vc = NetworkCallWithoutCombineViewController(service: userService)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func incrementButtonAction() {
+        viewModel.increment()
+    }
+    
+    @objc private func decrementButtonAction() {
+        viewModel.decrement()
+    }
+    
+    @objc private func resetButtonAction() {
+        viewModel.reset()
     }
 }
 
 #if DEBUG
-struct WithRxViewControllerRepresentable: UIViewControllerRepresentable {
+struct WithCombineRefactoredViewControllerRepresentable: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> some UIViewController {
-        let vm = WithRxViewModel()
-        return WithRxViewController(viewModel: vm)
+        let vm = WithCombineRefactoredViewModel()
+        return WithCombineRefactoredViewController(viewModel: vm)
     }
     
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
@@ -198,9 +162,9 @@ struct WithRxViewControllerRepresentable: UIViewControllerRepresentable {
     }
 }
 
-struct WithRxViewController_Previews: PreviewProvider {
+struct WithCombineRefactoredViewController_Previews: PreviewProvider {
     static var previews: some View {
-        WithRxViewControllerRepresentable()
+        WithCombineRefactoredViewControllerRepresentable()
     }
 }
 #endif

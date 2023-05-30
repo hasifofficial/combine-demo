@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 class WithoutCombineViewController: UIViewController {
     private var containerStackView: UIStackView = {
@@ -119,9 +120,7 @@ class WithoutCombineViewController: UIViewController {
     }
 }
 
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
-
+#if DEBUG
 struct WithoutCombineViewControllerRepresentable: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> some UIViewController {
@@ -132,10 +131,10 @@ struct WithoutCombineViewControllerRepresentable: UIViewControllerRepresentable 
         
     }
 }
-#endif
 
 struct WithoutCombineViewController_Previews: PreviewProvider {
     static var previews: some View {
         WithoutCombineViewControllerRepresentable()
     }
 }
+#endif

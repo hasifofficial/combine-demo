@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B31E9C82A25F01B00EB41A8 /* WithCombineRefactoredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B31E9C72A25F01B00EB41A8 /* WithCombineRefactoredViewController.swift */; };
 		1BE674EE2A22EA82009554EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE674ED2A22EA82009554EC /* AppDelegate.swift */; };
 		1BE674F02A22EA82009554EC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE674EF2A22EA82009554EC /* SceneDelegate.swift */; };
 		1BE674F72A22EA83009554EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BE674F62A22EA83009554EC /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B31E9C72A25F01B00EB41A8 /* WithCombineRefactoredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithCombineRefactoredViewController.swift; sourceTree = "<group>"; };
 		1BE674EA2A22EA82009554EC /* combine-demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "combine-demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BE674ED2A22EA82009554EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1BE674EF2A22EA82009554EC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				1BE675212A22EDC0009554EC /* WithCombineViewController.swift */,
+				1B31E9C72A25F01B00EB41A8 /* WithCombineRefactoredViewController.swift */,
 				1BE675532A24AB66009554EC /* NetworkCallWithCombineView.swift */,
 			);
 			path = WithCombine;
@@ -416,6 +419,7 @@
 				1BE674F02A22EA82009554EC /* SceneDelegate.swift in Sources */,
 				1BE675522A24560B009554EC /* User.swift in Sources */,
 				1BE675452A2453EF009554EC /* API.swift in Sources */,
+				1B31E9C82A25F01B00EB41A8 /* WithCombineRefactoredViewController.swift in Sources */,
 				1BE675582A25917B009554EC /* UserService.swift in Sources */,
 				1BE675492A245464009554EC /* RequestError.swift in Sources */,
 				1BE675222A22EDC0009554EC /* WithCombineViewController.swift in Sources */,

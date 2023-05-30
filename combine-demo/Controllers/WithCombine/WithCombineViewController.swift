@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Combine
+import SwiftUI
 
 class WithCombineViewController: UIViewController {
     private var containerStackView: UIStackView = {
@@ -51,7 +52,7 @@ class WithCombineViewController: UIViewController {
     
     private var nextButton: UIButton = {
         let newButton = UIButton()
-        newButton.setTitle("To API Without Combine", for: .normal)
+        newButton.setTitle("To Refactored Combine", for: .normal)
         newButton.setTitleColor(.systemBlue, for: .normal)
         newButton.translatesAutoresizingMaskIntoConstraints = false
         return newButton
@@ -98,16 +99,21 @@ class WithCombineViewController: UIViewController {
 
         counter
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] value in
-                guard let self = self else { return }
-                self.countLabel.text = String(value)
+            .map { value -> String in
+                String(value)
             }
+            .assign(to: \.text, on: countLabel)
+        // Another way to bind/subscribe
+//            .sink { [weak self] value in
+//                guard let self = self else { return }
+//                self.countLabel.text = value
+//            }
             .store(in: &cancellables)
     }
     
     @objc private func nextButtonAction() {
-        let userService = UserService()
-        let vc = NetworkCallWithoutCombineViewController(service: userService)
+        let vm = WithCombineRefactoredViewModel()
+        let vc = WithCombineRefactoredViewController(viewModel: vm)
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -124,9 +130,7 @@ class WithCombineViewController: UIViewController {
     }
 }
 
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
-
+#if DEBUG
 struct WithCombineViewControllerRepresentable: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> some UIViewController {
@@ -137,10 +141,10 @@ struct WithCombineViewControllerRepresentable: UIViewControllerRepresentable {
         
     }
 }
-#endif
 
 struct WithCombineViewController_Previews: PreviewProvider {
     static var previews: some View {
         WithCombineViewControllerRepresentable()
     }
 }
+#endif
