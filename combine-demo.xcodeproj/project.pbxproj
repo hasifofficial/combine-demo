@@ -24,13 +24,13 @@
 		1BE6753B2A23068F009554EC /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = 1BE6753A2A23068F009554EC /* RxTest */; };
 		1BE6753D2A24439B009554EC /* NetworkCallWithoutCombineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE6753C2A24439B009554EC /* NetworkCallWithoutCombineViewController.swift */; };
 		1BE675432A2453B6009554EC /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE675422A2453B6009554EC /* Endpoint.swift */; };
-		1BE675452A2453EF009554EC /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE675442A2453EF009554EC /* HTTPClient.swift */; };
+		1BE675452A2453EF009554EC /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE675442A2453EF009554EC /* API.swift */; };
 		1BE675472A245434009554EC /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE675462A245434009554EC /* RequestMethod.swift */; };
 		1BE675492A245464009554EC /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE675482A245464009554EC /* RequestError.swift */; };
 		1BE6754C2A2454C3009554EC /* UsersEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE6754B2A2454C3009554EC /* UsersEndpoints.swift */; };
-		1BE6754F2A2455BA009554EC /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE6754E2A2455BA009554EC /* UsersService.swift */; };
 		1BE675522A24560B009554EC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE675512A24560B009554EC /* User.swift */; };
 		1BE675542A24AB66009554EC /* NetworkCallWithCombineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE675532A24AB66009554EC /* NetworkCallWithCombineView.swift */; };
+		1BE675582A25917B009554EC /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE675572A25917B009554EC /* UserService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,13 +68,13 @@
 		1BE675262A230331009554EC /* WithRxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithRxViewController.swift; sourceTree = "<group>"; };
 		1BE6753C2A24439B009554EC /* NetworkCallWithoutCombineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCallWithoutCombineViewController.swift; sourceTree = "<group>"; };
 		1BE675422A2453B6009554EC /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
-		1BE675442A2453EF009554EC /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		1BE675442A2453EF009554EC /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		1BE675462A245434009554EC /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
 		1BE675482A245464009554EC /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		1BE6754B2A2454C3009554EC /* UsersEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersEndpoints.swift; sourceTree = "<group>"; };
-		1BE6754E2A2455BA009554EC /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersService.swift; sourceTree = "<group>"; };
 		1BE675512A24560B009554EC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1BE675532A24AB66009554EC /* NetworkCallWithCombineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCallWithCombineView.swift; sourceTree = "<group>"; };
+		1BE675572A25917B009554EC /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,7 +166,7 @@
 		1BE675402A24536A009554EC /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				1BE6754D2A24559F009554EC /* Services */,
+				1BE675562A259152009554EC /* Services */,
 				1BE6754A2A2454A2009554EC /* Endpoints */,
 				1BE675412A2453B0009554EC /* Base */,
 			);
@@ -177,7 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				1BE675422A2453B6009554EC /* Endpoint.swift */,
-				1BE675442A2453EF009554EC /* HTTPClient.swift */,
+				1BE675442A2453EF009554EC /* API.swift */,
 				1BE675462A245434009554EC /* RequestMethod.swift */,
 				1BE675482A245464009554EC /* RequestError.swift */,
 			);
@@ -192,20 +192,20 @@
 			path = Endpoints;
 			sourceTree = "<group>";
 		};
-		1BE6754D2A24559F009554EC /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				1BE6754E2A2455BA009554EC /* UsersService.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		1BE675502A245600009554EC /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				1BE675512A24560B009554EC /* User.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		1BE675562A259152009554EC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1BE675572A25917B009554EC /* UserService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,10 +359,10 @@
 				1BE674EE2A22EA82009554EC /* AppDelegate.swift in Sources */,
 				1BE674F02A22EA82009554EC /* SceneDelegate.swift in Sources */,
 				1BE675522A24560B009554EC /* User.swift in Sources */,
-				1BE675452A2453EF009554EC /* HTTPClient.swift in Sources */,
+				1BE675452A2453EF009554EC /* API.swift in Sources */,
+				1BE675582A25917B009554EC /* UserService.swift in Sources */,
 				1BE675492A245464009554EC /* RequestError.swift in Sources */,
 				1BE675222A22EDC0009554EC /* WithCombineViewController.swift in Sources */,
-				1BE6754F2A2455BA009554EC /* UsersService.swift in Sources */,
 				1BE6751E2A22EB00009554EC /* RootViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
